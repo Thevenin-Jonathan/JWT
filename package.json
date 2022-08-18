@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Thevenin-Jonathan/JWT/issues"
   },
-  "homepage": "https://github.com/Thevenin-Jonathan/JWT#readme"
+  "homepage": "https://github.com/Thevenin-Jonathan/JWT#readme",
+  "dependencies": {
+    "dotenv": "^16.0.1"
+  }
 }
