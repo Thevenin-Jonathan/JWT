@@ -1,0 +1,21 @@
+<%- include("./partials/_header") -%>
+
+<div class="container-content">
+  <h1>Connexion</h1>
+  <form action="/signin" method="POST">
+    <div class="container-form">
+      <label for="email">Email</label>
+      <input type="text" name="email" id="email">
+      <label for="password">Mot de passe:</label>
+      <input type="text" name="password" id="password">
+      <div class="container-btn">
+        <a href="/">
+          <input class="btn" type="button" value="Retour">
+        </a>
+        <input class="btn" type="submit" value="Valider">
+      </div>
+    </div>
+  </form>
+</div>
+
+<%- include("./partials/_footer") -%>
