@@ -23,11 +23,18 @@
 
 .btn {
   padding: 10px 15px;
-  border: none;
+  border: solid 3px white;
   border-radius: 5px;
   font-size: 1rem;
   background-color: rgb(36, 116, 255);
-  color: beige;
+  color: white;
+}
+
+.btn:hover {
+  cursor: pointer;
+  background-color: white;
+  color: rgb(36, 116, 255);
+  border: solid 3px rgb(36, 116, 255);
 }
 
 .container-form {
