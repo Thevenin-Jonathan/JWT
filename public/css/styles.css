@@ -37,6 +37,17 @@
   border: solid 3px rgb(36, 116, 255);
 }
 
+.container-password {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+#password {
+  flex-grow: 1;
+}
+
 .container-form {
   display: flex;
   flex-direction: column;

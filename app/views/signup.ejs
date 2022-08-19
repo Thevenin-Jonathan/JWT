@@ -5,9 +5,12 @@
   <form action="/signup" method="POST">
     <div class="container-form">
       <label for="email">Email</label>
-      <input type="text" name="email" id="email">
+      <input type="text" autofocus="" required="" name="email" id="email">
       <label for="password">Mot de passe:</label>
-      <input type="text" name="password" id="password">
+      <div class="container-password">
+        <input type="password" required="" name="password" id="password">
+        <i class="fa-solid fa-eye-slash" id="togglePassword"></i>
+      </div>
       <div class="container-btn">
         <a href="/">
           <input class="btn" type="button" value="Retour">
@@ -17,5 +20,7 @@
     </div>
   </form>
 </div>
+
+<script src="/js/signup.js" charset="utf-8"></script>
 
 <%- include("./partials/_footer") -%>
