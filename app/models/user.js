@@ -19,6 +19,17 @@ module.exports = class User {
     });
   }
 
+  static findByEmail(email) {
+    const sql = `SELECT * FROM user WHERE user.email = $1;`;
+    const params = [ email ];
+    return new Promise((resolve, reject) => {
+      db.get(sql, params, (err, row) => {
+        if (err) return reject(err);
+        return resolve(row);
+      });
+    });
+  }
+
   static findAll() {
     const sql = `SELECT * FROM user;`;
     return new Promise((resolve, reject) => {
