@@ -4,7 +4,7 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const app = express();
 const router = require("./app/router");
-const notFoundMiddleware = require("./app/middleware/notFoundMiddleware");
+const notFoundMiddleware = require("./app/middlewares/notFoundMiddleware");
 
 app.use(cookieParser());
 app.use(express.urlencoded({extended: true}));
