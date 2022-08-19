@@ -6,6 +6,19 @@ module.exports = class User {
     this.lastname = lastname;
     this.email = email;
     this.password = password;
+  }  
+
+  create() {
+    const sql = `
+      INSERT INTO user (firstname, lastname, email, password)
+      VALUES ($1, $2, $3, $4)`;
+    const params = [ this.firstname, this.lastname, this.email, this.password ];
+    return new Promise((resolve, reject) => {
+      db.run(sql, params, err => {
+        if (err) return reject(err);
+        return resolve(this);
+      });
+    });
   }
 
   static findOne(id) {
