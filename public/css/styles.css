@@ -18,6 +18,10 @@
   color: rgb(225, 9, 49);
 }
 
+.success-message {
+  color: rgb(5, 177, 54);
+}
+
 .container-btn {
   margin-top: 10px;
   display: flex;

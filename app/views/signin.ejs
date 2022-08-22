@@ -2,6 +2,9 @@
 
 <div class="container-content">
   <h1>Connexion</h1>
+  <% if (locals?.successMessage) { %>
+  <p class="success-message"><%= successMessage %></p>
+  <% } %>
   <form action="/signin" method="POST">
     <div class="container-form">
       <label for="email">Email</label>

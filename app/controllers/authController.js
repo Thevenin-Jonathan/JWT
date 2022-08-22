@@ -19,7 +19,7 @@ exports.signup = async (req, res) => {
   const user = new User(firstname, lastname, email, hashedPassword);
   await user.create();
 
-  res.render("signin");
+  res.render("signin", { successMessage: "Compte créé, veulliez vous connecter." });
 };
 
 exports.getSigninPage = (_, res) => {
