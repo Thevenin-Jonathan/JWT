@@ -1,6 +1,7 @@
 const User = require("../models/user");
 
-exports.getSignupPage = (_, res) => {
+exports.getSignupPage = (req, res) => {
+  if (req.user) return res.redirect("/profile");
   res.render("signup");
 };
 
