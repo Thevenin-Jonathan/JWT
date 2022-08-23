@@ -32,12 +32,12 @@ exports.signin = async (req, res, next) => {
       const match = await user.comparePassword(password);
       if (match) {
         req.login(user);
-        res.redirect("/");
+        return res.redirect("/");
       } else {
-        res.render("signin", { errMessage: "Mot de passe erroné." });
+        return res.status(400).render("signin", { errMessage: "Mot de passe erroné." });
       }
     } else {
-      res.render("signin", { errMessage: "Utilisateur non trouvé." });
+      return res.status(404).render("signin", { errMessage: "Utilisateur non trouvé." });
     }
   } catch (err) {
     next(err);
