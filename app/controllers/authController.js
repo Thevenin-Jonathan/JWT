@@ -1,5 +1,3 @@
-const bcrypt = require("bcrypt");
-const { findByEmail } = require("../models/user");
 const User = require("../models/user");
 
 exports.getSignupPage = (_, res) => {
@@ -14,9 +12,7 @@ exports.signup = async (req, res) => {
     res.status(400).render("signup", { errMessage });
   }
 
-  const salt = 12;
-  const hashedPassword = await bcrypt.hash(password, salt);
-  const user = new User(firstname, lastname, email, hashedPassword);
+  const user = new User(firstname, lastname, email, password);
   await user.create();
 
   res.render("signin", { successMessage: "Compte créé, veulliez vous connecter." });
