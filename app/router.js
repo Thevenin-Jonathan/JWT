@@ -3,6 +3,7 @@ const { getSigninPage, getSignupPage, signup, signin } = require("./controllers/
 const { getProfile } = require("./controllers/userController");
 
 router.get("/", (req, res) => {
+  if (req.user) return res.render("index", { user: req.user });
   res.render("index");
 });
 
