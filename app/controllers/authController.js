@@ -19,7 +19,8 @@ exports.signup = async (req, res) => {
   res.render("signin", { successMessage: "Compte créé, veulliez vous connecter." });
 };
 
-exports.getSigninPage = (_, res) => {
+exports.getSigninPage = (req, res) => {
+  if (req.user) return res.redirect("/profile");
   res.render("signin");
 };
 
