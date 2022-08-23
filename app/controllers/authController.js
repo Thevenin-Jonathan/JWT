@@ -22,6 +22,22 @@ exports.getSigninPage = (_, res) => {
   res.render("signin");
 };
 
-exports.signin = async (req, res) => {
-
+exports.signin = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findByEmail(email);
+    if (user) {
+      const match = await user.comparePassword(password);
+      if (match) {
+        req.login(user);
+        res.redirect("/");
+      } else {
+        res.render("signin", { errMessage: "Mot de passe erroné." });
+      }
+    } else {
+      res.render("signin", { errMessage: "Utilisateur non trouvé." });
+    }
+  } catch (err) {
+    next(err);
+  }
 };
