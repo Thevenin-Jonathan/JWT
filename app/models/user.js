@@ -2,12 +2,13 @@ const db = require("../database/db");
 const bcrypt = require("bcrypt");
 
 module.exports = class User {
-  constructor(firstname, lastname, email, password) {
+  constructor(firstname, lastname, email, password, id = null) {
     this.firstname = firstname;
     this.lastname = lastname;
     this.email = email;
     this.password = password;
-  }  
+    this.id = id;
+  }
 
   async hashPassword(password) {
     const salt = 12;
@@ -32,7 +33,7 @@ module.exports = class User {
     });
   }
 
-  static findOne(id) {
+  static async findOne(id) {
     const sql = `SELECT * FROM user WHERE user.id = $1;`;
     const params = [ id ];
     return new Promise((resolve, reject) => {
@@ -43,7 +44,7 @@ module.exports = class User {
     });
   }
 
-  static findByEmail(email) {
+  static async findByEmail(email) {
     const sql = `SELECT * FROM user WHERE user.email = $1;`;
     const params = [ email ];
     return new Promise((resolve, reject) => {
