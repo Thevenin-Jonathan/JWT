@@ -41,3 +41,8 @@ exports.signin = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.logout = (req, res) => {
+  req.logout();
+  res.redirect("/");
+};
