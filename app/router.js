@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { getSigninPage, getSignupPage, signup, signin } = require("./controllers/authController");
+const { getSigninPage, getSignupPage, signup, signin, logout } = require("./controllers/authController");
 const { getProfile } = require("./controllers/userController");
 
 router.get("/", (req, res) => {
@@ -14,6 +14,8 @@ router.route("/signup")
 router.route("/signin")
   .get(getSigninPage)
   .post(signin);
+
+router.get("/logout", logout);
 
 router.get("/profile", getProfile);
 
