@@ -39,7 +39,8 @@ module.exports = class User {
     return new Promise((resolve, reject) => {
       db.get(sql, params, (err, row) => {
         if (err) return reject(err);
-        return resolve(row);
+        if (row) resolve(new User(row.firstname, row.lastname, row.email, row.password, row.id));
+        else resolve(null);
       });
     });
   }
@@ -50,17 +51,8 @@ module.exports = class User {
     return new Promise((resolve, reject) => {
       db.get(sql, params, (err, row) => {
         if (err) return reject(err);
-        return resolve(row);
-      });
-    });
-  }
-
-  static findAll() {
-    const sql = `SELECT * FROM user;`;
-    return new Promise((resolve, reject) => {
-      db.all(sql, [], (err, rows) => {
-        if (err) return reject(err);
-        return resolve(rows);
+        if (row) resolve(new User(row.firstname, row.lastname, row.email, row.password, row.id));
+        else resolve(null);
       });
     });
   }
