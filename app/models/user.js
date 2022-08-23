@@ -1,4 +1,5 @@
 const db = require("../database/db");
+const bcrypt = require("bcrypt");
 
 module.exports = class User {
   constructor(firstname, lastname, email, password) {
@@ -8,10 +9,20 @@ module.exports = class User {
     this.password = password;
   }  
 
-  create() {
+  async hashPassword(password) {
+    const salt = 12;
+    return await bcrypt.hash(password, salt);
+  }
+
+  async comparePassword(password) {
+    return await bcrypt.compare(password, this.password);
+  }
+
+  async create() {
     const sql = `
       INSERT INTO user (firstname, lastname, email, password)
       VALUES ($1, $2, $3, $4)`;
+    this.password = await this.hashPassword(this.password);
     const params = [ this.firstname, this.lastname, this.email, this.password ];
     return new Promise((resolve, reject) => {
       db.run(sql, params, err => {
