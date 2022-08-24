@@ -1,6 +1,4 @@
-const User = require("../models/user");
-
-exports.getProfile = async (_, res) => {
-  const users = await User.findOne(1);
-  res.json({ users });
+exports.getProfile = async (req, res) => {
+  if (req.user) return res.render("profile", { user: req.user });
+  res.render("/");
 };
