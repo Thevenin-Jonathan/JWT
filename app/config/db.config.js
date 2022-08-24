@@ -1,6 +1,6 @@
 const path = require("path");
 const sqlite3 = require("sqlite3").verbose();
-const dbName = path.join(__dirname, "data", "app.db");
+const dbName = path.join(__dirname, "..", "database", "app.db");
 
 module.exports = new sqlite3.Database(dbName, err => {
   if (err) {

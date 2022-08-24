@@ -1,4 +1,4 @@
-const db = require("./db");
+const db = require("../config/db.config");
 
 const createUserTable = `
   CREATE TABLE IF NOT EXISTS user (
