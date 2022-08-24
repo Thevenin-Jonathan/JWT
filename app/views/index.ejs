@@ -2,6 +2,9 @@
 
 <div class="container-content">
   <h1>JWT Authentification</h1>
+  <% if (locals?.user) { %>
+  <p>Bonjour <span class="bold"><%= user.firstname %> !</span></p>
+  <% } %>
   <div class="container-btn">
     <% if (locals?.user) { %>
     <a href="/profile">
