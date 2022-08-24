@@ -70,3 +70,7 @@ input {
 footer {
   margin-bottom: 5px;
 }
+
+.bold {
+  font-weight: bold;
+}
