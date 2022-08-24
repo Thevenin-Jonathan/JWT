@@ -1,4 +1,4 @@
-const db = require("../database/db");
+const db = require("../config/db.config");
 const bcrypt = require("bcrypt");
 const { capitalize } = require("../utils");
 
