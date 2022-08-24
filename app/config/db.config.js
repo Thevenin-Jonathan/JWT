@@ -6,5 +6,5 @@ module.exports = new sqlite3.Database(dbName, err => {
   if (err) {
     return console.error(err.message);
   }
-  console.log(`Connexion réussie à la base de données "app.db"`);
+  console.log(`Success connexion to the DB "app.db"`);
 })

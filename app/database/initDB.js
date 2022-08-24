@@ -14,5 +14,5 @@ db.run(createUserTable, err => {
   if (err) {
     return console.error(err.message);
   }
-  console.log(`Création réussie de la table "user"`);
+  console.log(`Success "user" table creation.`);
 });
