@@ -7,7 +7,7 @@ module.exports.createJwt = (user) => {
       sub: user.id.toString()
     },
     secret, {
-      expiresIn: "60s"
+      expiresIn: "30s"
     }
   );
   return token;
