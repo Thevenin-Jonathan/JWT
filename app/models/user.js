@@ -1,5 +1,6 @@
 const db = require("../database/db");
 const bcrypt = require("bcrypt");
+const { capitalize } = require("../utils");
 
 module.exports = class User {
   constructor(firstname, lastname, email, password, id = null) {
@@ -9,6 +10,22 @@ module.exports = class User {
     this.password = password;
     this.id = id;
   }
+
+  get firstname() {
+    return capitalize(this._firstname);
+  };
+
+  set firstname(newFirstname) {
+    this._firstname = newFirstname;
+  };
+
+  get lastname() {
+    return capitalize(this._lastname);
+  };
+
+  set lastname(newLastname) {
+    this._lastname = newLastname;
+  };
 
   async hashPassword(password) {
     const salt = 12;
