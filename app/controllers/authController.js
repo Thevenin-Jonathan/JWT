@@ -8,11 +8,13 @@ exports.getSignupPage = (req, res) => {
 exports.signup = async (req, res) => {
   const { firstname, lastname, email, password } = req.body;
   
+  // Verify if user already exist
   if (await User.findByEmail(email.toString())) {
     const errMessage = "Cet email est déjà utilisé.";
     res.status(400).render("signup", { errMessage });
   }
 
+  // Create user and add him to the DB
   const user = new User(firstname, lastname, email, password);
   await user.create();
 
@@ -24,10 +26,12 @@ exports.getSigninPage = (req, res) => {
   res.render("signin");
 };
 
-exports.signin = async (req, res, next) => {
+exports.signin = async (req, res) => {
   try {
     const { email, password } = req.body;
+    // Get user from DB
     const user = await User.findByEmail(email);
+    // If exist, compare password, if match, log in the user, if not, display an error message
     if (user) {
       const match = await user.comparePassword(password);
       if (match) {
@@ -39,8 +43,10 @@ exports.signin = async (req, res, next) => {
     } else {
       return res.status(404).render("signin", { errMessage: "Utilisateur non trouvé." });
     }
+  // In case of error, remove token from cookie and redirect to home 
   } catch (err) {
-    next(err);
+    console.error(err);
+    res.redirect("/");
   }
 };
 
