@@ -50,6 +50,10 @@ exports.signin = async (req, res) => {
   }
 };
 
+exports.getLostPasswordPage = (_, res) => {
+  res.render("lostPassword");
+};
+
 exports.logout = (req, res) => {
   req.logout();
   res.redirect("/");

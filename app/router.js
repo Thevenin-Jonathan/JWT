@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { getSigninPage, getSignupPage, signup, signin, logout } = require("./controllers/authController");
+const { getSigninPage, getSignupPage, getLostPasswordPage, signin, signup, logout } = require("./controllers/authController");
 const { getProfile } = require("./controllers/userController");
 
 router.get("/", (req, res) => {
@@ -18,5 +18,8 @@ router.route("/signin")
 router.get("/logout", logout);
 
 router.get("/profile", getProfile);
+
+router.route("/lost-password")
+  .get(getLostPasswordPage);
 
 module.exports = router;
