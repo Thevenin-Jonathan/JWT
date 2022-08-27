@@ -2,9 +2,9 @@
 
 <div class="container-content">
   <h1>Connexion</h1>
-  <% if (locals?.successMessage) { %>
+  <% if (locals.successMessage) { %>
   <p class="success-message"><%= successMessage %></p>
-  <% } else if (locals?.errMessage) { %>
+  <% } else if (locals.errMessage) { %>
   <p class="error-message"><%= errMessage %></p>
   <% } %>
   <form action="/signin" method="POST">

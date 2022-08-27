@@ -1,7 +1,7 @@
 <%- include("./partials/_header") -%>
 
 <div class="container-content">
-  <% if (locals?.user) { %>
+  <% if (locals.user) { %>
   <h1>Profil de <%= user.firstname %></h1>
   <p><span class="bold">Prénom :</span> <%= user.firstname %></p>
   <p><span class="bold">Nom :</span> <%= user.lastname %></p>

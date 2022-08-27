@@ -2,7 +2,7 @@
 
 <div class="container-content">
   <h1>Enregistrement</h1>
-  <% if (locals?.errMessage) { %>
+  <% if (locals.errMessage) { %>
   <p class="error-message"><%= errMessage %></p>
   <% } %>
   <form action="/signup" method="POST">
