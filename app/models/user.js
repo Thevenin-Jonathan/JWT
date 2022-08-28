@@ -29,7 +29,7 @@ module.exports = class User {
     this._lastname = newLastname.toLowerCase();
   };
 
-  async hashPassword(password) {
+  static async hashPassword(password) {
     const salt = 12;
     return await bcrypt.hash(password, salt);
   }
