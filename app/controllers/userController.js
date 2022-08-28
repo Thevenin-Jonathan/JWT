@@ -72,3 +72,23 @@ exports.getProfile = async (req, res) => {
   if (req.user) return res.render("profile", { user: req.user });
   res.render("/");
 };
+
+exports.getEmailVerificationPage = async (req, res) => {
+  try {
+    const { userId, userEmailToken } = req.params;
+    const user = await User.findOne(userId);
+
+    if (user.emailVerified === 1) {
+      res.redirect("/users/signin");
+    } else if (user && userEmailToken && userEmailToken === user.emailToken) {
+      user.emailVerified = 1;
+      await user.save();
+      res.render("email-verification");
+    } else {
+      const errMessage = "Un problème est survenu durant le processus de vérification.";
+      res.status(400).render("email-verification", { errMessage });
+    };
+  } catch (err) {
+    console.error(err);
+  }
+};
