@@ -2,6 +2,7 @@ const db = require("../config/db.config");
 const bcrypt = require("bcrypt");
 const { capitalize } = require("../utils");
 const { v4: uuid } = require("uuid");
+const { Email } = require("../emails/email");
 
 module.exports = class User {
   constructor(firstname, lastname, email, password, emailVerified, emailToken, id) {
@@ -62,6 +63,16 @@ module.exports = class User {
       });
     });
   }
+
+  sendEmailVerification(req) {
+    Email.sendEmailVerification({
+      to: this.email,
+      username: this.firstname,
+      host: req.headers.host,
+      userId: this.id,
+      userEmailToken: this.emailToken
+    });
+  };
 
   static async findOne(id) {
     const sql = `SELECT * FROM user WHERE user.id = $1;`;

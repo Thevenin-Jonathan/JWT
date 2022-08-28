@@ -1,5 +1,4 @@
 const User = require("../models/user");
-const { Email } = require("../emails/email");
 
 exports.getSignupPage = (req, res) => {
   if (req.user) return res.redirect("/profile");
@@ -20,15 +19,9 @@ exports.signup = async (req, res) => {
     const user = await User.create(body);
 
     // Send email verification
-    Email.sendEmailVerification({
-      to: user.email,
-      username: user.firstname,
-      host: req.headers.host,
-      userId: user.id,
-      userEmailToken: user.emailToken
-    });
+    user.sendEmailVerification(req);
   
-    res.render("signin", { successMessage: "Compte créé, veulliez vous connecter." });
+    res.render("signin", { successMessage: "Un email vous a été envoyé pour vérifier votre adresse." });
 
   } catch (err) {
     console.error(err);
