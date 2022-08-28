@@ -44,14 +44,15 @@ exports.signin = async (req, res) => {
     if (user) {
       const match = await user.comparePassword(password);
       if (match) {
-        req.login(user);
-        return res.redirect("/");
-      } else {
-        return res.status(400).render("signin", { errMessage: "Mot de passe erroné." });
+        if (user.emailVerified === 0) {          
+          return res.status(400).render("signin", { errMessage: "Veuillez vérifier votre adresse email." });
+        } else {
+          req.login(user);
+          return res.redirect("/");
+        }
       }
-    } else {
-      return res.status(404).render("signin", { errMessage: "Utilisateur non trouvé." });
     }
+    return res.status(404).render("signin", { errMessage: "Email ou mot de passe erroné." });
   // In case of error, remove token from cookie and redirect to home 
   } catch (err) {
     console.error(err);
