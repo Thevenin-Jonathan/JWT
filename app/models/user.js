@@ -4,13 +4,14 @@ const { capitalize } = require("../utils");
 const { v4: uuid } = require("uuid");
 
 module.exports = class User {
-  constructor(firstname, lastname, email, password, id = null) {
+  constructor(firstname, lastname, email, password, emailVerified, emailToken, id) {
+    this.id = id || null;
     this.firstname = firstname;
     this.lastname = lastname;
     this.email = email;
     this.password = password;
-    this.id = id;
-    this.emailToken = uuid();
+    this.emailVerified = emailVerified || 0;
+    this.emailToken = emailToken || uuid();
   }
 
   get firstname() {
@@ -60,7 +61,15 @@ module.exports = class User {
     return new Promise((resolve, reject) => {
       db.get(sql, params, (err, row) => {
         if (err) return reject(err);
-        if (row) resolve(new User(row.firstname, row.lastname, row.email, row.password, row.id));
+        if (row) resolve(new User(
+          row.firstname,
+          row.lastname,
+          row.email,
+          row.password,
+          row.email_token,
+          row.email_verified,
+          row.id
+        ));
         else resolve(null);
       });
     });
@@ -72,7 +81,15 @@ module.exports = class User {
     return new Promise((resolve, reject) => {
       db.get(sql, params, (err, row) => {
         if (err) return reject(err);
-        if (row) resolve(new User(row.firstname, row.lastname, row.email, row.password, row.id));
+        if (row) resolve(new User(
+          row.firstname,
+          row.lastname,
+          row.email,
+          row.password,
+          row.email_token,
+          row.email_verified,
+          row.id
+        ));
         else resolve(null);
       });
     });
