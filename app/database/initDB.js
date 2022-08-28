@@ -8,7 +8,7 @@ const createUserTable = `
     email TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
     email_token TEXT,
-    email_verified BOOLEAN DEFAULT false
+    email_verified INTEGER DEFAULT 0 NOT NULL
   );
 `;
 
