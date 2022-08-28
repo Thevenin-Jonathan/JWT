@@ -1,0 +1,22 @@
+<%- include("./partials/_header") -%>
+
+<div class="container-content">
+  <h1>Vérification d'email</h1>
+  <% if (locals.errMessage) { %>
+  <p class="error-message"><%= errMessage %></p>
+  <div class="container-btn">
+    <a href="/">
+      <button class="btn">Retour</button>
+    </a>
+  </div>
+  <% } else { %>
+  <p>Votre email a bien été vérifié, vous pouvez maintenant vous connecter !</p>
+  <div class="container-btn">
+    <a href="/users/signin">
+      <button class="btn">Connexion</button>
+    </a>
+  </div>
+  <% }; %>
+</div>
+
+<%- include("./partials/_footer") -%>
