@@ -1,6 +1,7 @@
 const db = require("../config/db.config");
 const bcrypt = require("bcrypt");
 const { capitalize } = require("../utils");
+const { v4: uuid } = require("uuid");
 
 module.exports = class User {
   constructor(firstname, lastname, email, password, id = null) {
@@ -9,6 +10,7 @@ module.exports = class User {
     this.email = email;
     this.password = password;
     this.id = id;
+    this.emailToken = uuid();
   }
 
   get firstname() {
