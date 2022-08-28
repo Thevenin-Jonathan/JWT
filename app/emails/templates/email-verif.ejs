@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+
+    p {
+      margin-bottom: 10px;
+    }
+
+    .btn {
+      margin: 10px 0px;
+      padding: 10px 15px;
+      border: solid 3px white;
+      border-radius: 5px;
+      font-size: 12px;
+      background-color: rgb(36, 116, 255);
+      color: white;
+    }
+
+    .btn:hover {
+      cursor: pointer;
+    }
+
+    .bold {
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <p>Bonjour <span class="bold"><%= username %></span></p>
+  <p>Veuillez cliquer sur le bouton ci dessous pour vérifier votre email afin de valider votre compte:</p>
+  <a href="<%= url %>">
+    <button class="btn">Vérifier l'email</button>
+  </a>
+  <p>Merci et à bientot sur <a href="https://jonathan-thevenin.fr">www.jonathan-thevenin.fr</a></p>
+</body>
+
+</html>
