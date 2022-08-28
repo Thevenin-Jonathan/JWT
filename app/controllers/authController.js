@@ -6,18 +6,17 @@ exports.getSignupPage = (req, res) => {
 };
 
 exports.signup = async (req, res) => {
-  const { firstname, lastname, email, password } = req.body;
+  const body = req.body;
 
   try {
     // Verify if user already exist
-    if (await User.findByEmail(email.toString())) {
+    if (await User.findByEmail(body.email.toString())) {
       const errMessage = "Cet email est déjà utilisé.";
       res.status(400).render("signup", { errMessage });
     }
   
     // Create user and add him to the DB
-    const user = new User(firstname, lastname, email, password);
-    await user.create();
+    const user = await User.create(body);
 
   
     res.render("signin", { successMessage: "Compte créé, veulliez vous connecter." });

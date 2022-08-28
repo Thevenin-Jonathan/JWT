@@ -38,16 +38,18 @@ module.exports = class User {
     return await bcrypt.compare(password, this.password);
   }
 
-  async create() {
+  static async create(userInfos) {
+    const hashedPwd = await User.hashPassword(userInfos.password);
+    const user = new User(userInfos.firstname, userInfos.lastname, userInfos.email, hashedPwd);
     const sql = `
-      INSERT INTO user (firstname, lastname, email, password)
-      VALUES ($1, $2, $3, $4)`;
-    this.password = await this.hashPassword(this.password);
-    const params = [ this.firstname, this.lastname, this.email, this.password ];
+      INSERT INTO user (firstname, lastname, email, password, email_token)
+      VALUES ($1, $2, $3, $4, $5)`;
+    const params = [ user.firstname, user.lastname, user.email, user.password, user.emailToken ];
+
     return new Promise((resolve, reject) => {
       db.run(sql, params, err => {
         if (err) return reject(err);
-        return resolve(this);
+        return resolve(user);
       });
     });
   }
