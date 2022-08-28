@@ -12,19 +12,19 @@ module.exports = class User {
   }
 
   get firstname() {
-    return capitalize(this.firstname);
+    return capitalize(this._firstname);
   };
 
   set firstname(newFirstname) {
-    this.firstname = newFirstname.toLowerCase();
+    this._firstname = newFirstname.toLowerCase();
   };
 
   get lastname() {
-    return capitalize(this.lastname);
+    return capitalize(this._lastname);
   };
 
   set lastname(newLastname) {
-    this.lastname = newLastname.toLowerCase();
+    this._lastname = newLastname.toLowerCase();
   };
 
   async hashPassword(password) {
