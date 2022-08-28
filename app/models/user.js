@@ -64,6 +64,35 @@ module.exports = class User {
     });
   }
 
+  async save() {
+    const sql = `
+    UPDATE user
+    SET firstname = $1,
+        lastname = $2,
+        email = $3,
+        password = $4,
+        email_verified = $5,
+        email_token = $6
+    WHERE id = $7;
+    `;
+    const params = [
+      this.firstname,
+      this.lastname,
+      this.email,
+      this.password,
+      this.emailVerified,
+      this.emailToken,
+      this.id
+    ];
+    
+    return new Promise((resolve, reject) => {
+      db.run(sql, params, function(err) {
+        if (err) return reject(err);
+        return resolve();
+      });
+    });
+  }
+
   sendEmailVerification(req) {
     Email.sendEmailVerification({
       to: this.email,
