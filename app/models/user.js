@@ -44,12 +44,20 @@ module.exports = class User {
     const user = new User(userInfos.firstname, userInfos.lastname, userInfos.email, hashedPwd);
     const sql = `
       INSERT INTO user (firstname, lastname, email, password, email_token)
-      VALUES ($1, $2, $3, $4, $5)`;
-    const params = [ user.firstname, user.lastname, user.email, user.password, user.emailToken ];
-
+      VALUES ($1, $2, $3, $4, $5);
+    `;
+    const params = [
+      user.firstname,
+      user.lastname,
+      user.email,
+      user.password,
+      user.emailToken
+    ];
+    
     return new Promise((resolve, reject) => {
-      db.run(sql, params, err => {
+      db.run(sql, params, function(err) {
         if (err) return reject(err);
+        user.id = this.lastID;
         return resolve(user);
       });
     });
