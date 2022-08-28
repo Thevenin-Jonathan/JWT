@@ -6,6 +6,6 @@ router.get("/", (req, res) => {
   res.render("index");
 });
 
-router.use(userRouter);
+router.use("/users", userRouter);
 
 module.exports = router;

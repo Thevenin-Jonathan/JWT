@@ -7,18 +7,18 @@
   <% } %>
   <div class="container-btn">
     <% if (locals.user) { %>
-    <a href="/profile">
+    <a href="/users/profile">
       <button class="profile-btn btn">Profil</button>
     </a>
-    <a href="/logout">
+    <a href="/users/logout">
       <button class="logout-btn btn">Déconnexion</button>
     </a>
 
     <% } else { %>
-    <a href="/signup">
+    <a href="/users/signup">
       <button class="signup-btn btn">Inscription</button>
     </a>
-    <a href="/signin">
+    <a href="/users/signin">
       <button class="signin-btn btn">Connexion</button>
     </a>
     <% } %>

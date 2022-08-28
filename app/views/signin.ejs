@@ -7,13 +7,13 @@
   <% } else if (locals.errMessage) { %>
   <p class="error-message"><%= errMessage %></p>
   <% } %>
-  <form action="/signin" method="POST">
+  <form action="/users/signin" method="POST">
     <div class="container-form">
       <label for="email">Email</label>
       <input type="email" name="email" id="email">
       <label for="password">Mot de passe:</label>
       <input type="password" name="password" id="password">
-      <a class="text-blue" href="/lost-password">Mot de passe oublié ?</a>
+      <a class="text-blue" href="/users/lost-password">Mot de passe oublié ?</a>
       <div class="container-btn">
         <a href="/">
           <input class="btn" type="button" value="Retour">
