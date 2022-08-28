@@ -3,6 +3,7 @@ const {
   getSigninPage,
   getSignupPage,
   getLostPasswordPage,
+  getEmailVerificationPage,
   getProfile,
   signin,
   signup,
@@ -19,9 +20,12 @@ router.route("/signin")
 
 router.get("/logout", logout);
 
-router.get("/profile", getProfile);
-
 router.route("/lost-password")
   .get(getLostPasswordPage);
+
+router.get("/email-verification/:userId/:userEmailToken", getEmailVerificationPage);
+
+router.get("/profile", getProfile);
+
 
 module.exports = router;
