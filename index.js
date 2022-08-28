@@ -3,7 +3,7 @@ const path = require("path");
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const app = express();
-const router = require("./app/router");
+const router = require("./app/routers");
 const { addJwtFeatures, extractUserFromToken } = require("./app/middlewares/jwt");
 const notFoundMiddleware = require("./app/middlewares/notFoundMiddleware");
 

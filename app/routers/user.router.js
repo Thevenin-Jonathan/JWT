@@ -1,11 +1,13 @@
 const router = require("express").Router();
-const { getSigninPage, getSignupPage, getLostPasswordPage, signin, signup, logout } = require("./controllers/authController");
-const { getProfile } = require("./controllers/userController");
-
-router.get("/", (req, res) => {
-  if (req.user) return res.render("index", { user: req.user });
-  res.render("index");
-});
+const {
+  getSigninPage,
+  getSignupPage,
+  getLostPasswordPage,
+  getProfile,
+  signin,
+  signup,
+  logout
+} = require("../controllers/userController");
 
 router.route("/signup")
   .get(getSignupPage)
