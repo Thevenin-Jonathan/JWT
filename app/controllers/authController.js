@@ -7,18 +7,26 @@ exports.getSignupPage = (req, res) => {
 
 exports.signup = async (req, res) => {
   const { firstname, lastname, email, password } = req.body;
+
+  try {
+    // Verify if user already exist
+    if (await User.findByEmail(email.toString())) {
+      const errMessage = "Cet email est déjà utilisé.";
+      res.status(400).render("signup", { errMessage });
+    }
   
-  // Verify if user already exist
-  if (await User.findByEmail(email.toString())) {
-    const errMessage = "Cet email est déjà utilisé.";
+    // Create user and add him to the DB
+    const user = new User(firstname, lastname, email, password);
+    await user.create();
+
+  
+    res.render("signin", { successMessage: "Compte créé, veulliez vous connecter." });
+
+  } catch (err) {
+    console.error(err);
+    const errMessage = "Une erreur est survenue.";
     res.status(400).render("signup", { errMessage });
   }
-
-  // Create user and add him to the DB
-  const user = new User(firstname, lastname, email, password);
-  await user.create();
-
-  res.render("signin", { successMessage: "Compte créé, veulliez vous connecter." });
 };
 
 exports.getSigninPage = (req, res) => {
