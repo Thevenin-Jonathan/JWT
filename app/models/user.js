@@ -74,8 +74,8 @@ module.exports = class User {
           row.lastname,
           row.email,
           row.password,
-          row.email_token,
           row.email_verified,
+          row.email_token,
           row.id
         ));
         else resolve(null);
@@ -94,8 +94,8 @@ module.exports = class User {
           row.lastname,
           row.email,
           row.password,
-          row.email_token,
           row.email_verified,
+          row.email_token,
           row.id
         ));
         else resolve(null);
