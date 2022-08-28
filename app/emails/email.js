@@ -1,4 +1,6 @@
+const path = require("path");
 const nodemailer = require("nodemailer");
+const ejs = require("ejs");
 
 class Email {
   constructor() {
@@ -15,15 +17,20 @@ class Email {
 
   async sendEmailVerification(options) {
     try {
+      const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
       const email = {
         from: this.from,
         to: options.to,
         subject: "Vérification d'email",
-        text: "test d'envoi d'email de férification"
+        html: await ejs.renderFile(
+          path.join(__dirname, "templates/email-verif.ejs"), {
+            username: options.user,
+            url: `${protocol}://${options.host}/users/email-verification/${options.userId}/${options.userEmailToken}`
+          }
+        )
       };
 
-      const response = await this.transporter.sendMail(email);
-      console.log(response);
+      await this.transporter.sendMail(email);
     } catch (err) {
       console.error(err);
     }
