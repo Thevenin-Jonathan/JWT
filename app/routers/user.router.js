@@ -5,6 +5,7 @@ const {
   getLostPasswordPage,
   getEmailVerificationPage,
   getProfile,
+  sendEmailVerification,
   signin,
   signup,
   logout
@@ -22,6 +23,8 @@ router.get("/logout", logout);
 
 router.route("/lost-password")
   .get(getLostPasswordPage);
+
+router.get("/sending-email-verification/:userId", sendEmailVerification);
 
 router.get("/email-verification/:userId/:userEmailToken", getEmailVerificationPage);
 
