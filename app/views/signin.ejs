@@ -3,9 +3,12 @@
 <div class="container-content">
   <h1>Connexion</h1>
   <% if (locals.successMessage) { %>
-  <p class="success-message"><%= successMessage %></p>
+    <p class="success-message"><%= successMessage %></p>
   <% } else if (locals.errMessage) { %>
-  <p class="error-message"><%= errMessage %></p>
+    <p class="error-message"><%= errMessage %></p>
+    <% if (locals.url) { %>
+      <a class="text-blue" href="<%= url %>">Renvoyer l'email</a> 
+    <% } %>
   <% } %>
   <form action="/users/signin" method="POST">
     <div class="container-form">
