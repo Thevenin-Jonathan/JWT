@@ -19,8 +19,8 @@ exports.signup = async (req, res) => {
     const user = await User.create(body);
 
     // Send email verification
-    user.sendEmailVerification(req);
-  
+    user.sendEmailVerification(req.headers.host);
+
     res.render("signin", { successMessage: "Un email vous a été envoyé pour vérifier votre adresse." });
 
   } catch (err) {

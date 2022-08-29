@@ -93,11 +93,11 @@ module.exports = class User {
     });
   }
 
-  sendEmailVerification(req) {
+  sendEmailVerification(host) {
     Email.sendEmailVerification({
       to: this.email,
       username: this.firstname,
-      host: req.headers.host,
+      host,
       userId: this.id,
       userEmailToken: this.emailToken
     });
