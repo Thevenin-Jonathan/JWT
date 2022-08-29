@@ -74,6 +74,24 @@ exports.getProfile = async (req, res) => {
   res.render("/");
 };
 
+exports.sendEmailVerification = async (req, res) => {
+  try {
+    const userId = parseInt(req.params.userId);
+    const user = await User.findOne(userId);
+
+    if (user && user.emailVerified === 0) {
+      user.sendEmailVerification(req.headers.host);
+      res.render("signin", { successMessage: "Un email vous a été envoyé pour vérifier votre adresse." });
+    } else {
+      res.status(400).redirect("/");
+    }
+  } catch (err) {
+    console.error(err);
+    const errMessage = "Une erreur est survenue.";
+    res.status(400).render("signin", { errMessage });
+  }
+};
+
 exports.getEmailVerificationPage = async (req, res) => {
   try {
     const { userId, userEmailToken } = req.params;
