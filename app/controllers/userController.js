@@ -44,8 +44,11 @@ exports.signin = async (req, res) => {
     if (user) {
       const match = await user.comparePassword(password);
       if (match) {
-        if (user.emailVerified === 0) {          
-          return res.status(400).render("signin", { errMessage: "Veuillez vérifier votre adresse email." });
+        if (user.emailVerified === 0) {
+          return res.status(400).render("signin", {
+            errMessage: "Veuillez vérifier votre adresse email.",
+            url: `/users/sending-email-verification/${user.id}`
+          });
         } else {
           req.login(user);
           return res.redirect("/");
@@ -53,8 +56,6 @@ exports.signin = async (req, res) => {
       }
     }
     return res.status(404).render("signin", { errMessage: "Email ou mot de passe erroné." });
-    // In case of error, remove token from cookie and redirect to home 
-  // In case of error, remove token from cookie and redirect to home 
     // In case of error, remove token from cookie and redirect to home 
   } catch (err) {
     console.error(err);
