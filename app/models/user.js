@@ -5,7 +5,7 @@ const { v4: uuid } = require("uuid");
 const { Email } = require("../emails/email");
 
 module.exports = class User {
-  constructor(firstname, lastname, email, password, emailVerified, emailToken, id) {
+  constructor (firstname, lastname, email, password, emailVerified, emailToken, id) {
     this.id = id || null;
     this.firstname = firstname;
     this.lastname = lastname;
@@ -54,9 +54,9 @@ module.exports = class User {
       user.password,
       user.emailToken
     ];
-    
+
     return new Promise((resolve, reject) => {
-      db.run(sql, params, function(err) {
+      db.run(sql, params, function (err) {
         if (err) return reject(err);
         user.id = this.lastID;
         return resolve(user);
@@ -84,9 +84,9 @@ module.exports = class User {
       this.emailToken,
       this.id
     ];
-    
+
     return new Promise((resolve, reject) => {
-      db.run(sql, params, function(err) {
+      db.run(sql, params, function (err) {
         if (err) return reject(err);
         return resolve();
       });
@@ -105,7 +105,7 @@ module.exports = class User {
 
   static async findOne(id) {
     const sql = `SELECT * FROM user WHERE user.id = $1;`;
-    const params = [ id ];
+    const params = [id];
     return new Promise((resolve, reject) => {
       db.get(sql, params, (err, row) => {
         if (err) return reject(err);
@@ -125,7 +125,7 @@ module.exports = class User {
 
   static async findByEmail(email) {
     const sql = `SELECT * FROM user WHERE user.email = $1;`;
-    const params = [ email ];
+    const params = [email];
     return new Promise((resolve, reject) => {
       db.get(sql, params, (err, row) => {
         if (err) return reject(err);

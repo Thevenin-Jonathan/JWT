@@ -14,7 +14,7 @@ exports.signup = async (req, res) => {
       const errMessage = "Cet email est déjà utilisé.";
       res.status(400).render("signup", { errMessage });
     }
-  
+
     // Create user and add him to the DB
     const user = await User.create(body);
 
@@ -53,7 +53,9 @@ exports.signin = async (req, res) => {
       }
     }
     return res.status(404).render("signin", { errMessage: "Email ou mot de passe erroné." });
+    // In case of error, remove token from cookie and redirect to home 
   // In case of error, remove token from cookie and redirect to home 
+    // In case of error, remove token from cookie and redirect to home 
   } catch (err) {
     console.error(err);
     res.redirect("/");
