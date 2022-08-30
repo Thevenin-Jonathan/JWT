@@ -4,8 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon app.js",
-    "initDB": "node app/database/initDB.js"
+    "dev": "nodemon index.js",
+    "initDB": "node app/database/initDB.js",
+    "start": "NODE_ENV=production pm2 start index.js",
+    "stop": "pm2 stop index.js",
+    "restart": "pm2 restart index.js",
+    "delete": "pm2 delete index.js"
   },
   "repository": {
     "type": "git",
