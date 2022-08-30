@@ -9,7 +9,7 @@ class Email {
     if (process.env.NODE_ENV === "production") {
       this.transporter = nodemailer.createTransport(
         sparkPostTransporter({
-          sparkPostApiKey: "",
+          sparkPostApiKey: process.env.SPARKPOST_APIKEY,
           endpoint: "https://api.eu.sparkpost.com"
         })
       );
@@ -18,8 +18,8 @@ class Email {
         host: "smtp.mailtrap.io",
         port: 2525,
         auth: {
-          user: "d2b3afbec1c41b",
-          pass: "b9d8dd61b02c9f"
+          user: process.env.MAILTRAP_USER,
+          pass: process.env.MAILTRAP_PWD
         }
       });
     }
