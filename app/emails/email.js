@@ -45,6 +45,17 @@ class Email {
       console.error(err);
     }
   }
+
+  async sendEmailResetPassword(options) {
+    try {
+      const email = {
+        from: this.from,
+        to: options.to,
+        subject: "Réinitialisation du mot de passe",
+        html: await ejs.renderFile(
+          path.join(__dirname, "templates/reset-password.ejs"), {
+          username: options.username,
+          url: `${this.#protocol}://${options.host}/users/reset-password/${options.userId}/${options.userPasswordToken}`
         }
         )
       };
