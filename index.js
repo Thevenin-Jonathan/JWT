@@ -9,7 +9,7 @@ const notFoundMiddleware = require("./app/middlewares/notFoundMiddleware");
 
 // Parsing
 app.use(cookieParser());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Static files handling
