@@ -5,7 +5,7 @@ const { v4: uuid } = require("uuid");
 const { Email } = require("../emails/email");
 
 module.exports = class User {
-  constructor (firstname, lastname, email, password, emailVerified, emailToken, id) {
+  constructor (firstname, lastname, email, password, emailVerified, emailToken, passwordToken, passwordTokenDate, id) {
     this.id = id || null;
     this.firstname = firstname;
     this.lastname = lastname;
@@ -13,6 +13,8 @@ module.exports = class User {
     this.password = password;
     this.emailVerified = emailVerified || 0;
     this.emailToken = emailToken || uuid();
+    this.passwordToken = passwordToken || null;
+    this.passwordTokenDate = passwordTokenDate || null;
   }
 
   get firstname() {
@@ -72,8 +74,10 @@ module.exports = class User {
         email = $3,
         password = $4,
         email_verified = $5,
-        email_token = $6
-    WHERE id = $7;
+        email_token = $6,
+        password_token = $7,
+        password_token_date = $8
+    WHERE id = $9;
     `;
     const params = [
       this.firstname,
@@ -82,6 +86,8 @@ module.exports = class User {
       this.password,
       this.emailVerified,
       this.emailToken,
+      this.passwordToken,
+      this.passwordTokenDate,
       this.id
     ];
 
@@ -116,6 +122,8 @@ module.exports = class User {
           row.password,
           row.email_verified,
           row.email_token,
+          row.passwordToken,
+          row.passwordTokenDate,
           row.id
         ));
         else resolve(null);
@@ -136,6 +144,8 @@ module.exports = class User {
           row.password,
           row.email_verified,
           row.email_token,
+          row.passwordToken,
+          row.passwordTokenDate,
           row.id
         ));
         else resolve(null);
