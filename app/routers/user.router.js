@@ -28,6 +28,10 @@ router.route("/lost-password")
   .get(lostPasswordPage)
   .post(lostPassword);
 
+router.route("/reset-password/:userId/:passwordToken")
+  .get(resetPasswordPage)
+  .post(resetPassword);
+
 router.get("/sending-email-verification/:userId", sendEmailVerification);
 
 router.get("/email-verification/:userId/:userEmailToken", emailVerificationPage);
