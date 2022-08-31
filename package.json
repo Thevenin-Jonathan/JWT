@@ -28,11 +28,15 @@
     "dotenv": "^16.0.1",
     "ejs": "^3.1.8",
     "express": "^4.18.1",
+    "i": "^0.3.7",
     "jsonwebtoken": "^8.5.1",
     "nodemailer": "^6.7.8",
     "nodemailer-sendgrid-transport": "^0.2.0",
     "nodemon": "^2.0.19",
+    "npm": "^8.18.0",
+    "ovh-winston-ldp": "^0.3.3",
     "sqlite3": "^5.0.11",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "winston": "^3.8.1"
   }
 }
