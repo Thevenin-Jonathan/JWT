@@ -1,34 +1,37 @@
 const router = require("express").Router();
 const {
-  getSigninPage,
-  getSignupPage,
-  getLostPasswordPage,
-  getEmailVerificationPage,
-  getProfile,
+  emailVerificationPage,
+  logout,
+  lostPassword,
+  lostPasswordPage,
+  profilePage,
+  resetPasswordPage,
+  resetPassword,
   sendEmailVerification,
   signin,
+  signinPage,
   signup,
-  logout
+  signupPage,
 } = require("../controllers/userController");
 
 router.route("/signup")
-  .get(getSignupPage)
+  .get(signupPage)
   .post(signup);
 
 router.route("/signin")
-  .get(getSigninPage)
+  .get(signinPage)
   .post(signin);
 
 router.get("/logout", logout);
 
 router.route("/lost-password")
-  .get(getLostPasswordPage);
+  .get(lostPasswordPage)
 
 router.get("/sending-email-verification/:userId", sendEmailVerification);
 
-router.get("/email-verification/:userId/:userEmailToken", getEmailVerificationPage);
+router.get("/email-verification/:userId/:userEmailToken", emailVerificationPage);
 
-router.get("/profile", getProfile);
+router.get("/profile", profilePage);
 
 
 module.exports = router;

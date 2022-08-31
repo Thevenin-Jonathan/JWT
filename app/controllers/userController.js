@@ -1,6 +1,6 @@
 const User = require("../models/user");
 
-exports.getSignupPage = (req, res) => {
+exports.signupPage = (req, res) => {
   if (req.user) return res.redirect("/profile");
   res.render("signup");
 };
@@ -28,7 +28,7 @@ exports.signup = async (req, res) => {
   }
 };
 
-exports.getSigninPage = (req, res) => {
+exports.signinPage = (req, res) => {
   if (req.user) return res.redirect("/profile");
   res.render("signin");
 };
@@ -61,7 +61,7 @@ exports.signin = async (req, res) => {
   }
 };
 
-exports.getLostPasswordPage = (_, res) => {
+exports.lostPasswordPage = (_, res) => {
   res.render("lost-password");
 };
 
@@ -70,7 +70,7 @@ exports.logout = (req, res) => {
   res.redirect("/");
 };
 
-exports.getProfile = async (req, res) => {
+exports.profilePage = async (req, res) => {
   if (req.user) return res.render("profile", { user: req.user });
   res.render("/");
 };
@@ -92,7 +92,7 @@ exports.sendEmailVerification = async (req, res) => {
   }
 };
 
-exports.getEmailVerificationPage = async (req, res) => {
+exports.emailVerificationPage = async (req, res) => {
   try {
     const { userId, userEmailToken } = req.params;
     const user = await User.findOne(userId);
