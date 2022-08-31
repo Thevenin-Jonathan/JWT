@@ -64,7 +64,7 @@ exports.signin = async (req, res) => {
 };
 
 exports.getLostPasswordPage = (_, res) => {
-  res.render("lostPassword");
+  res.render("lost-password");
 };
 
 exports.logout = (req, res) => {
