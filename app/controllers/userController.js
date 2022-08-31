@@ -11,8 +11,7 @@ exports.signup = async (req, res) => {
   try {
     // Verify if user already exist
     if (await User.findByEmail(body.email.toString())) {
-      const errMessage = "Cet email est déjà utilisé.";
-      res.status(400).render("signup", { errMessage });
+      res.status(400).render("signup", { errMessage: "Cet email est déjà utilisé." });
     }
 
     // Create user and add him to the DB
@@ -25,8 +24,7 @@ exports.signup = async (req, res) => {
 
   } catch (err) {
     console.error(err);
-    const errMessage = "Une erreur est survenue.";
-    res.status(400).render("signup", { errMessage });
+    res.status(400).render("signup", { errMessage: "Une erreur est survenue." });
   }
 };
 
@@ -79,7 +77,7 @@ exports.getProfile = async (req, res) => {
 
 exports.sendEmailVerification = async (req, res) => {
   try {
-    const userId = parseInt(req.params.userId);
+    const { userId } = req.params;
     const user = await User.findOne(userId);
 
     if (user && user.emailVerified === 0) {
@@ -90,8 +88,7 @@ exports.sendEmailVerification = async (req, res) => {
     }
   } catch (err) {
     console.error(err);
-    const errMessage = "Une erreur est survenue.";
-    res.status(400).render("signin", { errMessage });
+    res.status(400).render("signin", { errMessage: "Une erreur est survenue." });
   }
 };
 
@@ -107,10 +104,10 @@ exports.getEmailVerificationPage = async (req, res) => {
       await user.save();
       res.render("email-verification");
     } else {
-      const errMessage = "Un problème est survenu durant le processus de vérification.";
-      res.status(400).render("email-verification", { errMessage });
+      res.status(400).render("email-verification", { errMessage: "Un problème est survenu durant le processus de vérification." });
     };
   } catch (err) {
     console.error(err);
+    res.status(400).render("email-verification", { errMessage: "Une erreur est survenue." });
   }
 };
