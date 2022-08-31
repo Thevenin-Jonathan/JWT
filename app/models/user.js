@@ -115,7 +115,7 @@ module.exports = class User {
       username: this.firstname,
       host,
       userId: this.id,
-      userPasswordToken: this.emailToken
+      userPasswordToken: this.passwordToken
     });
   };
 
@@ -132,8 +132,8 @@ module.exports = class User {
           row.password,
           row.email_verified,
           row.email_token,
-          row.passwordToken,
-          row.passwordTokenDate,
+          row.password_token,
+          row.password_token_date,
           row.id
         ));
         else resolve(null);
@@ -154,8 +154,8 @@ module.exports = class User {
           row.password,
           row.email_verified,
           row.email_token,
-          row.passwordToken,
-          row.passwordTokenDate,
+          row.password_token,
+          row.password_token_date,
           row.id
         ));
         else resolve(null);
