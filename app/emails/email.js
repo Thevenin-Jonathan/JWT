@@ -4,6 +4,8 @@ const sgTransport = require('nodemailer-sendgrid-transport');
 const ejs = require("ejs");
 
 class Email {
+  #protocol = process.env.NODE_ENV === "production" ? "https" : "http";
+
   constructor () {
     this.from = "Thevenin Jonathan <no-reply@jonathan-thevenin.fr>";
     if (process.env.NODE_ENV === "production") {
@@ -26,7 +28,6 @@ class Email {
 
   async sendEmailVerification(options) {
     try {
-      const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
       const email = {
         from: this.from,
         to: options.to,
@@ -34,7 +35,16 @@ class Email {
         html: await ejs.renderFile(
           path.join(__dirname, "templates/email-verif.ejs"), {
           username: options.username,
-          url: `${protocol}://${options.host}/users/email-verification/${options.userId}/${options.userEmailToken}`
+          url: `${this.#protocol}://${options.host}/users/email-verification/${options.userId}/${options.userEmailToken}`
+        }
+        )
+      };
+
+      await this.transporter.sendMail(email);
+    } catch (err) {
+      console.error(err);
+    }
+  }
         }
         )
       };
