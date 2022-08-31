@@ -133,5 +133,21 @@ exports.lostPassword = async (req, res) => {
   }
 }
 
+exports.resetPasswordPage = async (req, res) => {
+  try {
+    const { userId, passwordToken } = req.params;
+    const user = await User.findOne(userId);
+
+    if (user) {
+      if (user.passwordToken === passwordToken && user.passwordTokenDate > Date.now() / 1000 / 60) {
+        return res.render("reset-password", { userId, passwordToken });
+      }
+      return res.status(400).render("signin", { errMessage: "Le lien est expiré ou corrompu." });
+    }
+    return res.status(400).render("signin", { errMessage: "Compte utilisateur inconnu." });
+  } catch (err) {
+    console.error(err);
+    res.status(400).render("signin", { errMessage: "Une erreur est survenue." });
+  }
 };
 
