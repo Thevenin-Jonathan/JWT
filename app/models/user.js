@@ -109,6 +109,16 @@ module.exports = class User {
     });
   };
 
+  sendEmailResetPassword(host) {
+    Email.sendEmailResetPassword({
+      to: this.email,
+      username: this.firstname,
+      host,
+      userId: this.id,
+      userPasswordToken: this.emailToken
+    });
+  };
+
   static async findOne(id) {
     const sql = `SELECT * FROM user WHERE user.id = $1;`;
     const params = [id];
