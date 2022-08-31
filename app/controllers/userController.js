@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const { v4: uuid } = require("uuid");
 
 exports.signupPage = (req, res) => {
   if (req.user) return res.redirect("/profile");
