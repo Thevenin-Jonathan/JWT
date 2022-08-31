@@ -65,6 +65,26 @@ exports.lostPasswordPage = (_, res) => {
   res.render("lost-password");
 };
 
+exports.lostPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (email) {
+      const user = await User.findByEmail(email);
+      if (user) {
+        user.passwordToken = uuid();
+        user.passwordTokenDate = Math.round((Date.now() / 1000 / 60) + 120);
+        user.save();
+        user.sendEmailResetPassword(req.headers.host);
+        return res.render("signin", { successMessage: "Un email pour réinitialiser votre mot de passe vous a été envoyé." });
+      }
+    }
+    res.status(400).render("lost-password", { errMessage: "Utilisateur inconnu." });
+  } catch (err) {
+    console.error(err);
+    res.status(400).render("lost-password", { errMessage: "Une erreur est survenue." });
+  }
+}
+
 exports.logout = (req, res) => {
   req.logout();
   res.redirect("/");
