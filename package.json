@@ -34,7 +34,6 @@
     "nodemailer-sendgrid-transport": "^0.2.0",
     "nodemon": "^2.0.19",
     "npm": "^8.18.0",
-    "ovh-winston-ldp": "^0.3.3",
     "sqlite3": "^5.0.11",
     "uuid": "^8.3.2",
     "winston": "^3.8.1"
