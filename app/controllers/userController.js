@@ -132,3 +132,9 @@ exports.emailVerificationPage = async (req, res) => {
     res.status(400).render("email-verification", { errMessage: "Une erreur est survenue." });
   }
 };
+
+exports.resetPasswordPage = (req, res) => {
+  const { userId, passwordToken } = req.params;
+  res.render("reset-password.ejs", { userId, passwordToken });
+};
+
