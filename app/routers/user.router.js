@@ -26,6 +26,7 @@ router.get("/logout", logout);
 
 router.route("/lost-password")
   .get(lostPasswordPage)
+  .post(lostPassword);
 
 router.get("/sending-email-verification/:userId", sendEmailVerification);
 
