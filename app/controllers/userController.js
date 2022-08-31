@@ -12,7 +12,7 @@ exports.signup = async (req, res) => {
   try {
     // Verify if user already exist
     if (await User.findByEmail(body.email.toString())) {
-      res.status(400).render("signup", { errMessage: "Cet email est déjà utilisé." });
+      return res.status(400).render("signup", { errMessage: "Cet email est déjà utilisé." });
     }
 
     // Create user and add him to the DB
@@ -21,7 +21,7 @@ exports.signup = async (req, res) => {
     // Send email verification
     user.sendEmailVerification(req.headers.host);
 
-    res.render("signin", { successMessage: "Un email vous a été envoyé pour vérifier votre adresse." });
+    return res.render("signin", { successMessage: "Un email vous a été envoyé pour vérifier votre adresse." });
 
   } catch (err) {
     console.error(err);
@@ -79,9 +79,9 @@ exports.sendEmailVerification = async (req, res) => {
 
     if (user && user.emailVerified === 0) {
       user.sendEmailVerification(req.headers.host);
-      res.render("signin", { successMessage: "Un email vous a été envoyé pour vérifier votre adresse." });
+      return res.render("signin", { successMessage: "Un email vous a été envoyé pour vérifier votre adresse." });
     } else {
-      res.status(400).redirect("/");
+      return res.status(400).redirect("/");
     }
   } catch (err) {
     console.error(err);
@@ -95,13 +95,13 @@ exports.emailVerificationPage = async (req, res) => {
     const user = await User.findOne(userId);
 
     if (user.emailVerified === 1) {
-      res.redirect("/users/signin");
+      return res.redirect("/users/signin");
     } else if (user && userEmailToken && userEmailToken === user.emailToken) {
       user.emailVerified = 1;
       await user.save();
-      res.render("email-verification");
+      return res.render("email-verification");
     } else {
-      res.status(400).render("email-verification", { errMessage: "Un problème est survenu durant le processus de vérification." });
+      return res.status(400).render("email-verification", { errMessage: "Un problème est survenu durant le processus de vérification." });
     };
   } catch (err) {
     console.error(err);
@@ -126,7 +126,7 @@ exports.lostPassword = async (req, res) => {
         return res.render("signin", { successMessage: "Un email pour réinitialiser votre mot de passe vous a été envoyé." });
       }
     }
-    res.status(400).render("lost-password", { errMessage: "Utilisateur inconnu." });
+    return res.status(400).render("lost-password", { errMessage: "Utilisateur inconnu." });
   } catch (err) {
     console.error(err);
     res.status(400).render("lost-password", { errMessage: "Une erreur est survenue." });
