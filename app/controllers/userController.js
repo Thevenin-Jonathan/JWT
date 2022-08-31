@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const { v4: uuid } = require("uuid");
+const { logger } = require("../config/winston.config");
 
 exports.signupPage = (req, res) => {
   if (req.user) return res.redirect("/profile");
@@ -24,7 +25,7 @@ exports.signup = async (req, res) => {
     return res.render("signin", { successMessage: "Un email vous a été envoyé pour vérifier votre adresse." });
 
   } catch (err) {
-    console.error(err);
+    logger.error(err);
     res.status(400).render("signup", { errMessage: "Une erreur est survenue." });
   }
 };
@@ -57,7 +58,7 @@ exports.signin = async (req, res) => {
     return res.status(404).render("signin", { errMessage: "Email ou mot de passe erroné." });
     // In case of error, remove token from cookie and redirect to home 
   } catch (err) {
-    console.error(err);
+    logger.error(err);
     res.redirect("/");
   }
 };
@@ -84,7 +85,7 @@ exports.sendEmailVerification = async (req, res) => {
       return res.status(400).redirect("/");
     }
   } catch (err) {
-    console.error(err);
+    logger.error(err);
     res.status(400).render("signin", { errMessage: "Une erreur est survenue." });
   }
 };
@@ -104,7 +105,7 @@ exports.emailVerificationPage = async (req, res) => {
       return res.status(400).render("email-verification", { errMessage: "Un problème est survenu durant le processus de vérification." });
     };
   } catch (err) {
-    console.error(err);
+    logger.error(err);
     res.status(400).render("email-verification", { errMessage: "Une erreur est survenue." });
   }
 };
@@ -128,7 +129,7 @@ exports.lostPassword = async (req, res) => {
     }
     return res.status(400).render("lost-password", { errMessage: "Utilisateur inconnu." });
   } catch (err) {
-    console.error(err);
+    logger.error(err);
     res.status(400).render("lost-password", { errMessage: "Une erreur est survenue." });
   }
 }
@@ -146,7 +147,7 @@ exports.resetPasswordPage = async (req, res) => {
     }
     return res.status(400).render("signin", { errMessage: "Compte utilisateur inconnu." });
   } catch (err) {
-    console.error(err);
+    logger.error(err);
     res.status(400).render("signin", { errMessage: "Une erreur est survenue." });
   }
 };
@@ -169,7 +170,7 @@ exports.resetPassword = async (req, res) => {
     }
     return res.status(400).render("signin", { errMessage: "Compte utilisateur inconnu." });
   } catch (err) {
-    console.error(err);
+    logger.error(err);
     res.status(400).render("reset-password", { errMessage: "Une erreur est survenue." });
   }
 };
