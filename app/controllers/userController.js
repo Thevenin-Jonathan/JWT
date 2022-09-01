@@ -119,15 +119,14 @@ exports.lostPasswordPage = (_, res) => {
 exports.lostPassword = async (req, res) => {
   try {
     const { email } = req.body;
-    if (email) {
-      const user = await User.findByEmail(email);
-      if (user) {
-        user.passwordToken = uuid();
-        user.passwordTokenDate = (Date.now() / 1000 / 60) + 120;
-        await user.save();
-        user.sendEmailResetPassword(req.headers.host);
-        return res.render("signin", { successMessage: "Un email pour réinitialiser votre mot de passe vous a été envoyé." });
-      }
+    const user = await User.findByEmail(email);
+
+    if (user) {
+      user.passwordToken = uuid();
+      user.passwordTokenDate = (Date.now() / 1000 / 60) + 120;
+      await user.save();
+      user.sendEmailResetPassword(req.headers.host);
+      return res.render("signin", { successMessage: "Un email pour réinitialiser votre mot de passe vous a été envoyé." });
     }
     return res.status(400).render("lost-password", { errMessage: "Utilisateur inconnu." });
   } catch (err) {
