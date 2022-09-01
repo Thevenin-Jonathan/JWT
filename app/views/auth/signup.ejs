@@ -1,12 +1,18 @@
-<%- include("./partials/_header") -%>
+<%- include("../partials/_header") -%>
 
 <div class="container-content">
-  <h1>Réinitialisation du mot de passe</h1>
+  <h1>Enregistrement</h1>
   <% if (locals.errMessage) { %>
-    <p class="error-message"><%= errMessage %></p>
+  <p class="error-message"><%= errMessage %></p>
   <% } %>
-  <form action="/users/reset-password/<%= userId %>/<%= passwordToken %>" method="POST">
+  <form action="/users/signup" method="POST">
     <div class="container-form">
+      <label for="firstname">Prénom</label>
+      <input type="text" autofocus="" required="" name="firstname" id="firstname">
+      <label for="lastname">Nom</label>
+      <input type="text" required="" name="lastname" id="lastname">
+      <label for="email">Email</label>
+      <input type="email" required="" name="email" id="email">
       <label for="password">Mot de passe:</label>
       <div class="container-password">
         <input type="password" required="" name="password" id="password">
@@ -24,4 +30,4 @@
 
 <script src="/js/password-eye.js" charset="utf-8"></script>
 
-<%- include("./partials/_footer") -%>
+<%- include("../partials/_footer") -%>
