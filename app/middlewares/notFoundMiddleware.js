@@ -1,3 +1,3 @@
 module.exports = (_, res) => {
-  res.status(404).send("404 not found.");
+  res.status(404).render("errors/error-404");
 };
