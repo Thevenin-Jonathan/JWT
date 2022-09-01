@@ -3,17 +3,21 @@ const nodemailer = require("nodemailer");
 const sgTransport = require('nodemailer-sendgrid-transport');
 const ejs = require("ejs");
 
+// Class for sending emails
 class Email {
   #protocol = process.env.NODE_ENV === "production" ? "https" : "http";
 
+  // Two transporter config
   constructor () {
     this.from = "Thevenin Jonathan <no-reply@jonathan-thevenin.fr>";
+    // One in production with sendgrid by API key
     if (process.env.NODE_ENV === "production") {
       this.transporter = nodemailer.createTransport(sgTransport({
         auth: {
           api_key: process.env.SENDGRID_APIKEY
         }
       }));
+      // The other in development with mailtrap
     } else {
       this.transporter = nodemailer.createTransport({
         host: "smtp.mailtrap.io",
