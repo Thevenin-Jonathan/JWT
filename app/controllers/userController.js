@@ -78,10 +78,13 @@ exports.sendEmailVerification = async (req, res) => {
     const { userId } = req.params;
     const user = await User.findOne(userId);
 
+    // Check if user exist and if its account is not verified
     if (user && user.emailVerified === 0) {
+      // If yes, an email is sending to him for verification
       user.sendEmailVerification(req.headers.host);
       return res.render("signin", { successMessage: "Un email vous a été envoyé pour vérifier votre adresse." });
     } else {
+      // if not, redirect to home page
       return res.status(400).redirect("/");
     }
   } catch (err) {
@@ -95,10 +98,15 @@ exports.emailVerificationPage = async (req, res) => {
     const { userId, userEmailToken } = req.params;
     const user = await User.findOne(userId);
 
+    // Check if user exist
     if (user) {
+      // Check if the user have already verified its account
       if (user.emailVerified === 1) {
+        // If yes, redirect to home page
         return res.redirect("/users/signin");
+        // Check if the informations about email token are right
       } else if (userEmailToken && userEmailToken === user.emailToken) {
+        // If yes, change its account to verified
         user.emailVerified = 1;
         await user.save();
         return res.render("email-verification");
@@ -121,7 +129,9 @@ exports.lostPassword = async (req, res) => {
     const { email } = req.body;
     const user = await User.findByEmail(email);
 
+    // Check if user exist
     if (user) {
+      // If yes, create password token and password token expiration and sending an reset password email
       user.passwordToken = uuid();
       user.passwordTokenDate = (Date.now() / 1000 / 60) + 120;
       await user.save();
@@ -140,7 +150,9 @@ exports.resetPasswordPage = async (req, res) => {
     const { userId, passwordToken } = req.params;
     const user = await User.findOne(userId);
 
+    // Check if user exist
     if (user) {
+      // If yes, check if the informations about password token are right
       if (user.passwordToken === passwordToken && user.passwordTokenDate > Date.now() / 1000 / 60) {
         return res.render("reset-password", { userId, passwordToken });
       }
@@ -159,8 +171,11 @@ exports.resetPassword = async (req, res) => {
     const { password } = req.body;
     const user = await User.findOne(userId);
 
+    // Check if user exist
     if (user) {
+      // If yes, check if the informations about password token are right
       if (user.passwordToken === passwordToken && user.passwordTokenDate > Date.now() / 1000 / 60) {
+        // If yes, hash the new password and update the old password with it and remove password token infos
         user.password = await User.hashPassword(password);
         user.passwordToken = null;
         user.passwordTokenDate = null;
