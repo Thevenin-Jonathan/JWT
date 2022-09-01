@@ -1,4 +1,4 @@
-const logger = require("../config/winston.config");
+const { logger } = require("../config/winston.config");
 
 module.exports = (err, _, res, __) => {
   logger.error(err);
