@@ -6,6 +6,7 @@ const app = express();
 const router = require("./app/routers");
 const { addJwtFeatures, extractUserFromToken } = require("./app/middlewares/jwt");
 const notFoundMiddleware = require("./app/middlewares/notFoundMiddleware");
+const errorHandlerMiddleware = require("./app/middlewares/errorHandlerMiddleware");
 
 // Parsing
 app.use(cookieParser());
@@ -27,6 +28,9 @@ app.use(extractUserFromToken, router);
 
 // 404 handling
 app.use(notFoundMiddleware);
+
+// error handler
+app.use(errorHandlerMiddleware)
 
 const PORT = process.env.PORT;
 app.listen(PORT || 3000, () => {
