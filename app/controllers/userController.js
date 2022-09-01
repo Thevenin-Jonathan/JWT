@@ -95,19 +95,21 @@ exports.emailVerificationPage = async (req, res) => {
     const { userId, userEmailToken } = req.params;
     const user = await User.findOne(userId);
 
-    if (user.emailVerified === 1) {
-      return res.redirect("/users/signin");
-    } else if (user && userEmailToken && userEmailToken === user.emailToken) {
-      user.emailVerified = 1;
-      await user.save();
-      return res.render("email-verification");
-    } else {
-      return res.status(400).render("email-verification", { errMessage: "Un problème est survenu durant le processus de vérification." });
+    if (user) {
+      if (user.emailVerified === 1) {
+        return res.redirect("/users/signin");
+      } else if (userEmailToken && userEmailToken === user.emailToken) {
+        user.emailVerified = 1;
+        await user.save();
+        return res.render("email-verification");
+      }
     };
-  } catch (err) {
-    logger.error(err);
-    res.status(400).render("email-verification", { errMessage: "Une erreur est survenue." });
+    return res.status(400).render("email-verification", { errMessage: "Un problème est survenu durant le processus de vérification." });
   }
+  } catch (err) {
+  logger.error(err);
+  res.status(400).render("email-verification", { errMessage: "Une erreur est survenue." });
+}
 };
 
 exports.lostPasswordPage = (_, res) => {
