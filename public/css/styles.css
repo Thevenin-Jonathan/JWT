@@ -84,6 +84,10 @@ footer {
   margin-bottom: 5px;
 }
 
+.flex-v-center {
+  align-items: center;
+}
+
 .text-blue {
   color: rgb(36, 116, 255);
 }
