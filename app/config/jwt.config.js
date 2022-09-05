@@ -2,8 +2,8 @@ require("dotenv").config();
 const secret = process.env.JWT_SECRET;
 const jwt = require("jsonwebtoken");
 
-const tokenExpirationInSec = 60; // Token life time
-const tokenRefreshDelayInSec = 60 * 5; // Max time to refresh token after its expiration
+const tokenExpirationInSec = 60 * 60 * 24; // Token life time (24 heures)
+const tokenRefreshDelayInSec = 60 * 60 * 24 * 30; // Max time to refresh token after its expiration (30 jours)
 
 exports.createJwt = ({ user = null, id = null }) => {
   const token = jwt.sign({
