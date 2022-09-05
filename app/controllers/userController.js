@@ -37,7 +37,7 @@ exports.signinPage = (req, res) => {
 
 exports.signin = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, stayConnected } = req.body;
     // Get user from DB
     const user = await User.findByEmail(email);
     // If exist, compare password, if match, log in the user, if not, display an error message
@@ -50,6 +50,10 @@ exports.signin = async (req, res) => {
             url: `/users/sending-email-verification/${user.id}`
           });
         } else {
+          if (stayConnected) {
+            user.stayConnected = 1;
+            user.save();
+          }
           req.login(user);
           return res.redirect("/");
         }
