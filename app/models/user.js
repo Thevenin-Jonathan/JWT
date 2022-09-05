@@ -47,7 +47,7 @@ module.exports = class User {
     const user = new User(userInfos.firstname, userInfos.lastname, userInfos.email, hashedPwd);
     const sql = `
       INSERT INTO user (firstname, lastname, email, password, email_token)
-      VALUES ($1, $2, $3, $4, $5);
+      VALUES (?, ?, ?, ?, ?);
     `;
     const params = [
       user.firstname,
@@ -69,15 +69,15 @@ module.exports = class User {
   async save() {
     const sql = `
     UPDATE user
-    SET firstname = $1,
-        lastname = $2,
-        email = $3,
-        password = $4,
-        email_verified = $5,
-        email_token = $6,
-        password_token = $7,
-        password_token_date = $8
-    WHERE id = $9;
+    SET firstname = ?,
+        lastname = ?,
+        email = ?,
+        password = ?,
+        email_verified = ?,
+        email_token = ?,
+        password_token = ?,
+        password_token_date = ?,
+    WHERE id = ?;
     `;
     const params = [
       this.firstname,
@@ -120,7 +120,7 @@ module.exports = class User {
   };
 
   static async findOne(id) {
-    const sql = `SELECT * FROM user WHERE user.id = $1;`;
+    const sql = `SELECT * FROM user WHERE user.id = ?;`;
     const params = [id];
     return new Promise((resolve, reject) => {
       db.get(sql, params, (err, row) => {
@@ -142,7 +142,7 @@ module.exports = class User {
   }
 
   static async findByEmail(email) {
-    const sql = `SELECT * FROM user WHERE user.email = $1;`;
+    const sql = `SELECT * FROM user WHERE user.email = ?;`;
     const params = [email];
     return new Promise((resolve, reject) => {
       db.get(sql, params, (err, row) => {
