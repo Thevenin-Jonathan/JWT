@@ -13,12 +13,10 @@ module.exports = class User {
     this.password = password;
     this.emailVerified = optionnal.emailVerified || 0;
     this.emailToken = optionnal.emailToken || uuid();
-    this.emailVerified = emailVerified || 0;
-    this.emailToken = emailToken || uuid();
-    this.passwordToken = passwordToken || null;
-    this.passwordTokenDate = passwordTokenDate || null;
+    this.stayConnected = optionnal.stayConnected || 0;
     this.passwordToken = optionnal.passwordToken || null;
     this.passwordTokenDate = optionnal.passwordTokenDate || null;
+    this.isBanned = optionnal.isBanned || 0;
   }
 
   get firstname() {
@@ -81,6 +79,8 @@ module.exports = class User {
         email_token = ?,
         password_token = ?,
         password_token_date = ?,
+        is_banned = ?,
+        stay_connected = ?
     WHERE id = ?;
     `;
     const params = [
@@ -92,6 +92,8 @@ module.exports = class User {
       this.emailToken,
       this.passwordToken,
       this.passwordTokenDate,
+      this.isBanned,
+      this.stayConnected,
       this.id
     ];
 
@@ -140,6 +142,8 @@ module.exports = class User {
             emailToken: row.email_token,
             passwordToken: row.password_token,
             passwordTokenDate: row.password_token_date,
+            stayConnected: row.stay_connected,
+            isBanned: row.is_banned
           }
         ));
         else resolve(null);
@@ -164,6 +168,8 @@ module.exports = class User {
             emailToken: row.email_token,
             passwordToken: row.password_token,
             passwordTokenDate: row.password_token_date,
+            stayConnected: row.stay_connected,
+            isBanned: row.is_banned
           }
         ));
         else resolve(null);
