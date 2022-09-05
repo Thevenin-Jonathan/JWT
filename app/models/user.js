@@ -5,16 +5,20 @@ const { v4: uuid } = require("uuid");
 const { Email } = require("../emails/email");
 
 module.exports = class User {
-  constructor (firstname, lastname, email, password, emailVerified, emailToken, passwordToken, passwordTokenDate, id) {
-    this.id = id || null;
+  constructor (firstname, lastname, email, password, optionnal = {}) {
+    this.id = optionnal.id || null;
     this.firstname = firstname;
     this.lastname = lastname;
     this.email = email;
     this.password = password;
+    this.emailVerified = optionnal.emailVerified || 0;
+    this.emailToken = optionnal.emailToken || uuid();
     this.emailVerified = emailVerified || 0;
     this.emailToken = emailToken || uuid();
     this.passwordToken = passwordToken || null;
     this.passwordTokenDate = passwordTokenDate || null;
+    this.passwordToken = optionnal.passwordToken || null;
+    this.passwordTokenDate = optionnal.passwordTokenDate || null;
   }
 
   get firstname() {
@@ -130,11 +134,13 @@ module.exports = class User {
           row.lastname,
           row.email,
           row.password,
-          row.email_verified,
-          row.email_token,
-          row.password_token,
-          row.password_token_date,
-          row.id
+          {
+            id: row.id,
+            emailVerified: row.email_verified,
+            emailToken: row.email_token,
+            passwordToken: row.password_token,
+            passwordTokenDate: row.password_token_date,
+          }
         ));
         else resolve(null);
       });
@@ -152,11 +158,13 @@ module.exports = class User {
           row.lastname,
           row.email,
           row.password,
-          row.email_verified,
-          row.email_token,
-          row.password_token,
-          row.password_token_date,
-          row.id
+          {
+            id: row.id,
+            emailVerified: row.email_verified,
+            emailToken: row.email_token,
+            passwordToken: row.password_token,
+            passwordTokenDate: row.password_token_date,
+          }
         ));
         else resolve(null);
       });
