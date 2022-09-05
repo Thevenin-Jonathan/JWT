@@ -78,7 +78,7 @@ module.exports = class User {
         email_token = ?,
         password_token = ?,
         password_token_date = ?,
-        is_banned = ?,
+        is_banned = ?
     WHERE id = ?;
     `;
     const params = [
