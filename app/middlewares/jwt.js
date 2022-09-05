@@ -9,8 +9,8 @@ module.exports.addJwtFeatures = async (req, res, next) => {
   // Remove cookie for logout
   req.logout = () => res.clearCookie("jwt");
   // Create token and add it to user cookie
-  req.login = (user) => {
-    const token = createJwt({ user });
+  req.login = (user, isRefreshed) => {
+    const token = createJwt({ user, isRefreshed });
     res.cookie("jwt", token);
   };
   next();
