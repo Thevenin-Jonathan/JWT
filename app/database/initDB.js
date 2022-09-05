@@ -9,8 +9,10 @@ const createUserTable = `
     password TEXT NOT NULL,
     email_token TEXT,
     email_verified INTEGER DEFAULT 0 NOT NULL,
+    stay_connected INTEGER DEFAULT 0 NOT NULL,
     password_token TEXT,
-    password_token_date TEXT
+    password_token_date TEXT,
+    is_banned INTEGER DEFAULT 0 NOT NULL
   );
 `;
 
