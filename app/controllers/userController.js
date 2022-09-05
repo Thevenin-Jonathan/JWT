@@ -50,6 +50,10 @@ exports.signin = async (req, res) => {
             errMessage: "Veuillez vérifier votre adresse email.",
             url: `/users/sending-email-verification/${user.id}`
           });
+        } else if(user.isBanned === 1) {
+          return res.status(403).render("auth/signin", {
+            errMessage: "Ce compte est banni définitivement."
+          });
         } else {
           req.login(user, stayConnected);
           return res.redirect("/");

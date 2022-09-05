@@ -26,8 +26,8 @@ module.exports.extractUserFromToken = async (req, res, next) => {
       decodedToken = checkExpirationToken(decodedToken, res);
       // Get user from DB
       const user = await User.findOne(decodedToken.sub);
-      // If user exist, add him to "req.user" and pass to the next middleware
-      if (user) {
+      // If user exist and not banned, add him to "req.user" and pass to the next middleware
+      if (user && user.isBanned === 0) {
         req.user = user;
         next();
       // If not, remove token from cookie and redirect to home
