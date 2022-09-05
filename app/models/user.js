@@ -13,7 +13,6 @@ module.exports = class User {
     this.password = password;
     this.emailVerified = optionnal.emailVerified || 0;
     this.emailToken = optionnal.emailToken || uuid();
-    this.stayConnected = optionnal.stayConnected || 0;
     this.passwordToken = optionnal.passwordToken || null;
     this.passwordTokenDate = optionnal.passwordTokenDate || null;
     this.isBanned = optionnal.isBanned || 0;
@@ -80,7 +79,6 @@ module.exports = class User {
         password_token = ?,
         password_token_date = ?,
         is_banned = ?,
-        stay_connected = ?
     WHERE id = ?;
     `;
     const params = [
@@ -93,7 +91,6 @@ module.exports = class User {
       this.passwordToken,
       this.passwordTokenDate,
       this.isBanned,
-      this.stayConnected,
       this.id
     ];
 
@@ -142,7 +139,6 @@ module.exports = class User {
             emailToken: row.email_token,
             passwordToken: row.password_token,
             passwordTokenDate: row.password_token_date,
-            stayConnected: row.stay_connected,
             isBanned: row.is_banned
           }
         ));
@@ -168,7 +164,6 @@ module.exports = class User {
             emailToken: row.email_token,
             passwordToken: row.password_token,
             passwordTokenDate: row.password_token_date,
-            stayConnected: row.stay_connected,
             isBanned: row.is_banned
           }
         ));
