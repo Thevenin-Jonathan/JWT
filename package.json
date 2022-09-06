@@ -36,5 +36,9 @@
     "sqlite3": "^5.0.11",
     "uuid": "^8.3.2",
     "winston": "^3.8.1"
+  },
+  "devDependencies": {
+    "jest": "^29.0.2",
+    "supertest": "^6.2.4"
   }
 }
