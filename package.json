@@ -9,7 +9,8 @@
     "start": "NODE_ENV=production pm2 start index.js",
     "stop": "pm2 stop index.js",
     "restart": "pm2 restart index.js",
-    "delete": "pm2 delete index.js"
+    "delete": "pm2 delete index.js",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
