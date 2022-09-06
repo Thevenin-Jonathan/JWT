@@ -1,6 +1,6 @@
 const request = require("supertest");
-const app = require("../app");
-const User = require("../models/user");
+const app = require("../../app/app");
+const User = require("../../app/models/user");
 
 describe("Test the user paths", () => {
 
