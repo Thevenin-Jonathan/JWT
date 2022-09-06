@@ -22,7 +22,7 @@ exports.signup = async (req, res) => {
     // Send email verification
     user.sendEmailVerification(req.headers.host);
 
-    return res.render("auth/signin", { successMessage: "Un email vous a été envoyé pour vérifier votre adresse." });
+    return res.status(201).render("auth/signin", { successMessage: "Un email vous a été envoyé pour vérifier votre adresse." });
 
   } catch (err) {
     logger.error(err);
@@ -140,7 +140,7 @@ exports.lostPassword = async (req, res) => {
       user.passwordTokenDate = (Date.now() / 1000 / 60) + 120;
       await user.save();
       user.sendEmailResetPassword(req.headers.host);
-      return res.render("auth/signin", { successMessage: "Un email pour réinitialiser votre mot de passe vous a été envoyé." });
+      return res.status(204).render("auth/signin", { successMessage: "Un email pour réinitialiser votre mot de passe vous a été envoyé." });
     }
     return res.status(400).render("auth/lost-password", { errMessage: "Utilisateur inconnu." });
   } catch (err) {
@@ -184,7 +184,7 @@ exports.resetPassword = async (req, res) => {
         user.passwordToken = null;
         user.passwordTokenDate = null;
         await user.save();
-        return res.render("auth/signin", { successMessage: "Le mot de pass a bien été réinitialisé." });
+        return res.status(204).render("auth/signin", { successMessage: "Le mot de pass a bien été réinitialisé." });
       }
       return res.status(400).render("auth/signin", { errMessage: "Le lien est expiré ou corrompu." });
     }
