@@ -26,11 +26,11 @@ router.get("/logout", logout);
 
 router.route("/lost-password")
   .get(lostPasswordPage)
-  .post(lostPassword);
+  .patch(lostPassword);
 
 router.route("/reset-password/:userId/:passwordToken")
   .get(resetPasswordPage)
-  .post(resetPassword);
+  .patch(resetPassword);
 
 router.get("/sending-email-verification/:userId", sendEmailVerification);
 
