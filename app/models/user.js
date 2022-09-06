@@ -171,4 +171,15 @@ module.exports = class User {
       });
     });
   }
+
+  static async deleteByEmail(email) {
+    const sql = 'DELETE FROM user WHERE user.email = ?;'
+    const params = [email];
+    return new Promise((resolve, reject) => {
+      db.run(sql, params, function (err) {
+        if (err) return reject(err);
+        return resolve();
+      });
+    })
+  }
 }
