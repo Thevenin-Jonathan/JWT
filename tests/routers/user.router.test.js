@@ -84,11 +84,11 @@ describe("Test the user paths", () => {
   });
 
   describe("Post lost password form", () => {  
-    test("It should return a statusCode 204", async () => {
+    test("It should return a statusCode 200", async () => {
       const response = await request(app)
-        .patch("/users/lost-password")
+        .post("/users/lost-password")
         .send(credentials);
-      expect(response.statusCode).toBe(204);
+      expect(response.statusCode).toBe(200);
     });
   });
 
@@ -101,11 +101,11 @@ describe("Test the user paths", () => {
   });
 
   describe("Post reset password form", () => {  
-    test("It should return a statusCode 204", async () => {
+    test("It should return a statusCode 200", async () => {
       const response = await request(app)
-        .patch(`/users/reset-password/${ user.id }/${ user.passwordToken }`)
+        .post(`/users/reset-password/${ user.id }/${ user.passwordToken }`)
         .send({ password: newPassword });
-      expect(response.statusCode).toBe(204);
+      expect(response.statusCode).toBe(200);
     })
   });
 
