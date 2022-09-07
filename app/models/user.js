@@ -46,10 +46,11 @@ module.exports = class User {
   static async create(userInfos) {
     const hashedPwd = await User.hashPassword(userInfos.password);
     const user = new User(userInfos.firstname, userInfos.lastname, userInfos.email, hashedPwd);
-    const sql = `
+
+    const stmt = db.prepare(`
       INSERT INTO user (firstname, lastname, email, password, email_token)
-      VALUES (?, ?, ?, ?, ?);
-    `;
+      VALUES (?, ?, ?, ?, ?)
+    `);
     const params = [
       user.firstname,
       user.lastname,
@@ -58,29 +59,26 @@ module.exports = class User {
       user.emailToken
     ];
 
-    return new Promise((resolve, reject) => {
-      db.run(sql, params, function (err) {
-        if (err) return reject(err);
-        user.id = this.lastID;
-        return resolve(user);
-      });
-    });
+    const result = stmt.run(...params);
+    user.id = result.lastInsertRowid;
+    return user;
   }
 
   async save() {
-    const sql = `
-    UPDATE user
-    SET firstname = ?,
-        lastname = ?,
-        email = ?,
-        password = ?,
-        email_verified = ?,
-        email_token = ?,
-        password_token = ?,
-        password_token_date = ?,
-        is_banned = ?
-    WHERE id = ?;
-    `;
+    const stmt = db.prepare(`
+      UPDATE user
+      SET firstname = ?,
+          lastname = ?,
+          email = ?,
+          password = ?,
+          email_verified = ?,
+          email_token = ?,
+          password_token = ?,
+          password_token_date = ?,
+          is_banned = ?
+      WHERE id = ?
+    `);
+
     const params = [
       this.firstname,
       this.lastname,
@@ -94,12 +92,8 @@ module.exports = class User {
       this.id
     ];
 
-    return new Promise((resolve, reject) => {
-      db.run(sql, params, function (err) {
-        if (err) return reject(err);
-        return resolve();
-      });
-    });
+    stmt.run(...params);
+    return;
   }
 
   sendEmailVerification(host) {
@@ -123,63 +117,47 @@ module.exports = class User {
   };
 
   static async findOne(id) {
-    const sql = `SELECT * FROM user WHERE user.id = ?;`;
-    const params = [id];
-    return new Promise((resolve, reject) => {
-      db.get(sql, params, (err, row) => {
-        if (err) return reject(err);
-        if (row) resolve(new User(
-          row.firstname,
-          row.lastname,
-          row.email,
-          row.password,
-          {
-            id: row.id,
-            emailVerified: row.email_verified,
-            emailToken: row.email_token,
-            passwordToken: row.password_token,
-            passwordTokenDate: row.password_token_date,
-            isBanned: row.is_banned
-          }
-        ));
-        else resolve(null);
-      });
-    });
+    const stmt = db.prepare("SELECT * FROM user WHERE user.id = ?");
+    const result = stmt.get(id);
+    if (result) return new User(
+      result.firstname,
+      result.lastname,
+      result.email,
+      result.password,
+      {
+        id: result.id,
+        emailVerified: result.email_verified,
+        emailToken: result.email_token,
+        passwordToken: result.password_token,
+        passwordTokenDate: result.password_token_date,
+        isBanned: result.is_banned
+      }
+    );
+    return;
   }
 
-  static async findByEmail(email) {
-    const sql = `SELECT * FROM user WHERE user.email = ?;`;
-    const params = [email];
-    return new Promise((resolve, reject) => {
-      db.get(sql, params, (err, row) => {
-        if (err) return reject(err);
-        if (row) resolve(new User(
-          row.firstname,
-          row.lastname,
-          row.email,
-          row.password,
-          {
-            id: row.id,
-            emailVerified: row.email_verified,
-            emailToken: row.email_token,
-            passwordToken: row.password_token,
-            passwordTokenDate: row.password_token_date,
-            isBanned: row.is_banned
-          }
-        ));
-        else resolve(null);
-      });
-    });
+  static findByEmail(email) {
+    const stmt = db.prepare("SELECT * FROM user WHERE user.email = ?");
+    const result = stmt.get(email);
+    if (result) return new User(
+      result.firstname,
+      result.lastname,
+      result.email,
+      result.password,
+      {
+        id: result.id,
+        emailVerified: result.email_verified,
+        emailToken: result.email_token,
+        passwordToken: result.password_token,
+        passwordTokenDate: result.password_token_date,
+        isBanned: result.is_banned
+      }
+    );
+    return;
   }
 
   static async deleteByEmail(email) {
-    const sql = 'DELETE FROM user WHERE user.email = ?;'
-    const params = [email];
-    return new Promise((resolve, reject) => {
-      db.run(sql, params, function (err) {
-        if (err) return reject(err);
-        return resolve();
-      });
-    })
+    const stmt = db.prepare("DELETE FROM user WHERE user.email = ?");
+    return stmt.run(email);
   }
 }

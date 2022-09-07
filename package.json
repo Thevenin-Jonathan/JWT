@@ -10,7 +10,7 @@
     "stop": "pm2 stop index.js",
     "restart": "pm2 restart index.js",
     "delete": "pm2 delete index.js",
-    "test": "jest"
+    "test": "jest --bail --coverage --detectOpenHandles"
   },
   "repository": {
     "type": "git",
@@ -25,6 +25,7 @@
   "homepage": "https://github.com/Thevenin-Jonathan/JWT#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "better-sqlite3": "^7.6.2",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.1",
     "ejs": "^3.1.8",
