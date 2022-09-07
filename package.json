@@ -10,7 +10,7 @@
     "stop": "pm2 stop index.js",
     "restart": "pm2 restart index.js",
     "delete": "pm2 delete index.js",
-    "test": "jest"
+    "test": "jest --bail --coverage --detectOpenHandles"
   },
   "repository": {
     "type": "git",
