@@ -1,12 +1,9 @@
 const path = require("path");
-const sqlite3 = require("sqlite3").verbose();
 const dbName = path.join(__dirname, "..", "database", "app.db");
-const logger = require("../config/winston.config");
+let options = {};
+if (process.env.NODE_ENV !== "production") {
+  options = { verbose: console.log };
+}
 
 // export database connection
-module.exports = new sqlite3.Database(dbName, err => {
-  if (err) {
-    return logger.error(err);
-  }
-  console.log(`Success connexion to the DB "app.db"`);
-})
+module.exports = require('better-sqlite3')(dbName, options);
