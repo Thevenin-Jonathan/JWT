@@ -75,7 +75,7 @@ exports.logout = (req, res) => {
 
 exports.profilePage = (req, res) => {
   if (req.user) return res.render("profile", { user: req.user });
-  res.render("/");
+  res.redirect("/");
 };
 
 exports.sendEmailVerification = (req, res) => {
