@@ -34,17 +34,17 @@ module.exports = class User {
     this._lastname = newLastname.toLowerCase();
   };
 
-  static async hashPassword(password) {
+  static hashPassword(password) {
     const salt = 12;
-    return await bcrypt.hash(password, salt);
+    return bcrypt.hashSync(password, salt);
   }
 
-  async comparePassword(password) {
-    return await bcrypt.compare(password, this.password);
+  comparePassword(password) {
+    return bcrypt.compareSync(password, this.password);
   }
 
-  static async create(userInfos) {
-    const hashedPwd = await User.hashPassword(userInfos.password);
+  static create(userInfos) {
+    const hashedPwd = User.hashPassword(userInfos.password);
     const user = new User(userInfos.firstname, userInfos.lastname, userInfos.email, hashedPwd);
 
     const stmt = db.prepare(`
@@ -64,7 +64,7 @@ module.exports = class User {
     return user;
   }
 
-  async save() {
+  save() {
     const stmt = db.prepare(`
       UPDATE user
       SET firstname = ?,
@@ -116,7 +116,7 @@ module.exports = class User {
     });
   };
 
-  static async findOne(id) {
+  static findOne(id) {
     const stmt = db.prepare("SELECT * FROM user WHERE user.id = ?");
     const result = stmt.get(id);
     if (result) return new User(
@@ -156,7 +156,7 @@ module.exports = class User {
     return;
   }
 
-  static async deleteByEmail(email) {
+  static deleteByEmail(email) {
     const stmt = db.prepare("DELETE FROM user WHERE user.email = ?");
     return stmt.run(email);
   }
