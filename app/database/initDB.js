@@ -1,6 +1,6 @@
 const db = require("../config/db.config");
 
-const createUserTable = `
+const createUserTable = db.prepare(`
   CREATE TABLE IF NOT EXISTS user (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     firstname TEXT NOT NULL,
@@ -13,11 +13,11 @@ const createUserTable = `
     password_token_date TEXT,
     is_banned INTEGER DEFAULT 0 NOT NULL
   );
-`;
+`);
 
-db.run(createUserTable, err => {
-  if (err) {
-    return console.error(err.message);
-  }
-  console.log(`Success "user" table creation.`);
-});
+try {
+  createUserTable.run();
+  console.log("User table created !");
+} catch (err) {
+  console.error(err);
+}
