@@ -6,11 +6,12 @@
   "scripts": {
     "dev": "nodemon index.js",
     "initDB": "node app/database/initDB.js",
+    "initDB-test": "NODE_ENV=test node app/database/initDB.js",
     "start": "NODE_ENV=production pm2 start index.js",
     "stop": "pm2 stop index.js",
     "restart": "pm2 restart index.js",
     "delete": "pm2 delete index.js",
-    "test": "jest --bail --coverage --detectOpenHandles"
+    "test": "NODE_ENV=test jest --bail --coverage --detectOpenHandles"
   },
   "repository": {
     "type": "git",
